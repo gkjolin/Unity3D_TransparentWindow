@@ -107,12 +107,6 @@ namespace XJ.Unity3D.ImageEffects
 
         #endregion DLL Import
 
-        #region Field
-
-        //public Color TransparentColorKey;
-
-        #endregion Field
-
         #region Method
 
         /// <summary>
@@ -161,20 +155,6 @@ namespace XJ.Unity3D.ImageEffects
             }
 #endif
         }
-
-        /// <summary>
-        /// 描画時に呼び出されます。
-        /// </summary>
-        /// <param name="source">
-        /// 描画する RenderTexture. (入力)
-        /// </param>
-        /// <param name="destination">
-        /// 描画される RenderTexture. (出力先)
-        /// </param>
-        //protected override void OnRenderImage(RenderTexture source, RenderTexture destination)
-        //{
-        //    base.OnRenderImage(source, destination);
-        //}
 
         #endregion Method
     }
