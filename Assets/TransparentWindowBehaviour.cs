@@ -2,6 +2,9 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
 
+/// <summary>
+/// 実行ウィンドウを透過させるコンポーネント。
+/// </summary>
 public class TransparentWindowBehaviour : MonoBehaviour
 {
     #region Enum
@@ -99,13 +102,30 @@ public class TransparentWindowBehaviour : MonoBehaviour
 
     #endregion DLL Import
 
-    #region Method
+    #region Field
 
     /// <summary>
-    /// 初期化時に呼び出されます。
+    /// 有効か無効か。true のとき有効。
     /// </summary>
-    protected virtual void Awake()
+    new public bool enabled;
+
+    #endregion Field
+
+    #region Method
+
+    // enabled をスクリプトから変更する余地を残すために、
+    // Awake ではなく Start で実行するようにしています。
+
+    /// <summary>
+    /// 開始時に呼び出されます。
+    /// </summary>
+    protected virtual void Start()
     {
+        if (!this.enabled)
+        {
+            return;
+        }
+
 #if !UNITY_EDITOR
         const int GWL_STYLE = -16;
         const uint WS_POPUP = 0x80000000;

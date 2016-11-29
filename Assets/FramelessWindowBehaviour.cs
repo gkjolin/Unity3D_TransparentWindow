@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System;
 
 /// <summary>
-/// フレームなしのウィンドウを実行するためのコンポ―ネント。
+/// 実行ウィンドウのフレームを非表示にするコンポーネント。
 /// </summary>
 public class FramelessWindowBehaviour : MonoBehaviour
 {
@@ -44,22 +44,39 @@ public class FramelessWindowBehaviour : MonoBehaviour
 
     #region Field
 
+    /// <summary>
+    /// 有効か無効か。true のとき有効。
+    /// </summary>
+    new public bool enabled;
+
+    /// <summary>
+    /// Window を表示する位置と大きさ。
+    /// </summary>
     public Rect screenPosition;
-    const uint SWP_SHOWWINDOW = 0x0040;
-    const int GWL_STYLE = -16;
-    const uint WS_BORDER = 1;
 
     #endregion Field
 
     #region Method
 
+    // enabled をスクリプトから変更する余地を残すために、
+    // Awake ではなく Start で実行するようにしています。
+
     /// <summary>
-    /// 初期化時に呼び出されます。
+    /// 開始時に呼び出されます。
     /// </summary>
-    protected virtual void Awake ()
+    protected virtual void Start ()
     {
-        // UnityEditor 以外で実行します。
+        if (!this.enabled)
+        {
+            return;
+        }
+
 #if !UNITY_EDITOR
+
+        const uint SWP_SHOWWINDOW = 0x0040;
+        const int GWL_STYLE = -16;
+        const uint WS_BORDER = 1;
+
         IntPtr windowHandle = GetActiveWindow();
         SetWindowLong(windowHandle, GWL_STYLE, WS_BORDER);
         bool result = SetWindowPos(windowHandle,
